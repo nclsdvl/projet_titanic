@@ -12,5 +12,4 @@ Jeudi : finalisation du rapport (maj quotidiennement)<br/><br/>
 
 # Requirement :
 pip install pandas_profiling<br/>
-pip install cufflinks<br/>
 pip install plotly<br/>
