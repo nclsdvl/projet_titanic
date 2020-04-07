@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import numpy as np
 import matplotlib.pyplot as plt
-
+import random
 
 
 
@@ -35,6 +35,23 @@ df_train.drop('Cabin', axis=1, inplace=True)
 complete_df.drop('Cabin', axis=1, inplace=True)
 
 
+print(df_train.Age.isna().sum()) # -> 177
+print(pd.qcut(df_train.Age,10).unique())
+#[(0.419, 14.0] < (14.0, 19.0] < (19.0, 22.0] < (22.0, 25.0] < (25.0, 28.0] < (28 31] (31.8, 36.0] < (36.0, 41.0] < (41.0, 50.0] < (50.0, 80.0]]
+s = [random.randint(0, 15) for i in range(17)]
+s += [random.randint(15, 19) for i in range(17)]
+s += [random.randint(19, 22) for i in range(18)]
+s += [random.randint(22, 25) for i in range(18)]
+s += [random.randint(25, 28) for i in range(18)]
+s += [random.randint(28, 32) for i in range(18)]
+s += [random.randint(32, 36) for i in range(18)]
+s += [random.randint(36, 41) for i in range(18)]
+s += [random.randint(41, 50) for i in range(18)]
+s += [random.randint(50, 80) for i in range(17)]
+
+
+
+
 # On profile le restant de nos données
 #complete_profile = ProfileReport(complete_df, title='complete Profiling Report', html={'style':{'full_width':True}})
 #train_profile =  ProfileReport(df_train, title='training Profiling Report', html={'style':{'full_width':True}})
@@ -46,7 +63,7 @@ complete_df.drop('Cabin', axis=1, inplace=True)
 # la colonne age contient 263 données manquantes on choisit de les remplacé par la medianne (28)
 # on testera par la suite eventuellement par la moyenne
 #moy_age = complete_df.Age.mean()
-med_age = complete_df.Age.median()
+#med_age = complete_df.Age.median()
 
 
 
@@ -55,8 +72,8 @@ med_age = complete_df.Age.median()
 #df.describe()
 
 # on enregistre notre dataframe finale
-complete_df.to_csv('complete_dataframe.csv', index = False)
-df_train.to_csv('train_dataframe.csv', index = False)
+#complete_df.to_csv('complete_dataframe.csv', index = False)
+#df_train.to_csv('train_dataframe.csv', index = False)
 
 
 
@@ -67,10 +84,10 @@ df_train.to_csv('train_dataframe.csv', index = False)
 #########################################################################################
 train_df = pd.read_csv('train_dataframe.csv')
 
-train_df['Age'].fillna(med_age, inplace = True)
+train_df['Age'].fillna(28, inplace = True)
 train_df = df_train.dropna()
 
-complete_df['Age'].fillna(med_age, inplace = True)
+complete_df['Age'].fillna(s, inplace = True)
 complete_df = complete_df.dropna()
 
 modeleReg=LinearRegression()

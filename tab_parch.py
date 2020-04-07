@@ -21,6 +21,21 @@ complete_df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
 train_df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
 
 
+
+parch0 = train_df[train_df['Parch']==0]
+parch1 = train_df[train_df['Parch']==1]
+parch2 = train_df[train_df['Parch']==2]
+parch_more = train_df[train_df['Parch']>2]
+
+parch0_dead = len(parch0[parch0.Survived=='Dead']) # 65.63
+parch1_dead = len(parch1[parch1.Survived=='Dead']) # 44.91
+parch2_dead = len(parch2[parch2.Survived=='Dead']) # 50
+parch3_dead = len(parch_more[parch_more.Survived=='Dead']) # 73.33
+
+
+
+
+
 liste_train_parch = train_df['Parch']
 liste_complete_parch = complete_df['Parch']
 
@@ -57,9 +72,9 @@ def get_content():
               
                 ], className='row'),
          dcc.Graph(figure=fig3_train),
-         html.H5('taux de mortalité '),
-         html.H5('taux de mortalité '),
-         html.H5('taux de mortalité '),
-         html.H5('taux de mortalité '),
+         html.H5('taux de mortalité si 0 enfant / parent : 65.63%'),
+         html.H5('taux de mortalité si 1 enfant / parent : 44.91%'),
+         html.H5('taux de mortalité si 2 enfant / parent : 50%'),
+         html.H5('taux de mortalité si + de 3 enfant / parent : 73.33%'),
           
           ])

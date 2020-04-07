@@ -19,18 +19,12 @@ import tab_sexe as tab_sexe
 import tab_sibling as tab_sibling
 import tab_parch as tab_parch
 import tab_fare as tab_fare
-"""
 import tab_embarked as tab_embarked
-"""
+import tab_Pclass as tab_Pclass
+import tab_correlation as tab_correlation
+
 complete_df = pd.read_csv('complete_dataframe.csv')
 train_df = pd.read_csv('train_dataframe.csv')
-
-
-
-
-
-
-
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -52,6 +46,8 @@ app.layout = html.Div([
                 dcc.Tab(label='Parch', value='Parch'),
                 dcc.Tab(label='Fare', value='Fare'),
                 dcc.Tab(label='Embarked', value='Embarked'),
+                dcc.Tab(label='Pclass', value='Pclass'),
+                dcc.Tab(label='Correlation', value='Correlation')
             ]),
             html.Div(id='tabs-content')
             ])
@@ -72,9 +68,11 @@ def render_content(tab):
     elif tab == 'Fare' :
         return tab_fare.get_content()
     elif tab == 'Embarked' :
-        return tab_embarked.get_Content
-
-
+        return tab_embarked.get_content()
+    elif tab == 'Pclass' :
+        return tab_Pclass.get_content()
+    elif tab == 'Correlation' :
+        return tab_correlation.get_content()
 
 if __name__ == '__main__':
 
