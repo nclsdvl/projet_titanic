@@ -5,63 +5,28 @@ Created on Mon Apr  6 13:13:19 2020
 @author: MonOrdiPro
 """
 
-# -*- coding: utf-8 -*-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from plotly.graph_objs import *
-
+from dash.dependencies import Input, Output
 import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
-
-df = pd.read_csv('complete_dataframe.csv')
-df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
-
-
-
-surviveH = df[df['Sex']=="male"]['Survived']
-surviveF = df[df['Sex']=="female"]['Survived']
-
-
-
-fig = px.histogram(df, x="Age", color="Survived")
-
-
-fig2 = go.Figure(data=[go.Pie(labels=df.Sex)])
-
+import tab_age as tab_age
+import tab_sexe as tab_sexe
+import tab_sibling as tab_sibling
+import tab_parch as tab_parch
+import tab_fare as tab_fare
 """
-fig3 = go.Figure(data=[go.Pie(labels=surviveH)])
-
-
-fig4 = go.Figure(data=[go.Pie(labels=surviveF)])
-
+import tab_embarked as tab_embarked
 """
+complete_df = pd.read_csv('complete_dataframe.csv')
+train_df = pd.read_csv('train_dataframe.csv')
 
-fig3 = {
-    'data': [{'labels': ['Dead', 'Alive'],
-              'values': [19, 26, 55],
-              'type': 'pie',
-              'sort': False,
-              'marker': {'colors': ['rgb(255, 0, 0)',
-                                    'rgb(0, 255, 0)',
-                                    'rgb(0, 0, 255)']
-                        }
-            }]
-     }
 
-fig4 = {
-    'data': [{'labels': ['Residential', 'Non-Residential', 'Utility'],
-              'values': [100, 10, 25],
-              'type': 'pie',
-              'sort': False,
-              'marker': {'colors': ['rgb(255, 0, 0)',
-                                    'rgb(0, 255, 0)',
-                                    'rgb(0, 0, 255)']
-                        }
-            }]
-     }
+
 
 
 
@@ -80,43 +45,34 @@ app.layout = html.Div([
                         'textAlign': 'center',}),
             html.Hr(),
             html.Br(),
-            html.Div([
-                html.H3(children = 'Variable age',
-                    style={
-                        'textAlign': 'center'}),
-                    dcc.Graph(id='g1', figure=fig)
-                ]),
-           html.Div([
-               html.H3(children = 'Repartition des voyageurs par genre',
-                    style={
-                        'textAlign': 'center'}),
-                    dcc.Graph(id='g2', figure=fig2)
-                ]),
-
-
-            html.Div([
-                html.Div([
-                    html.H3(children = 'survie chez les Hommes',
-                    style={
-                        'textAlign': 'center'}),
-                    dcc.Graph(id='g3', figure=fig3)
-                    
-                    ],className="six columns"),
-               html.Div([
-                    html.H3(children = 'Survie chez les femmes',
-                    style={
-                        'textAlign': 'center'}),
-                    dcc.Graph(id='g4', figure=fig4)
-                    
-                    ],className="six columns"),
-
-            ], className="row",)    
-    
-    
-    ])
+            dcc.Tabs(id="tabs", value='Age', children=[
+                dcc.Tab(label='Age', value='Age'),
+                dcc.Tab(label='Sexe', value='Sexe'),
+                dcc.Tab(label='Sibling', value='Sibling'),
+                dcc.Tab(label='Parch', value='Parch'),
+                dcc.Tab(label='Fare', value='Fare'),
+                dcc.Tab(label='Embarked', value='Embarked'),
+            ]),
+            html.Div(id='tabs-content')
+            ])
         
 
 
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs', 'value')])
+def render_content(tab):
+    if tab == 'Age':
+        return tab_age.get_content()
+    elif tab == 'Sexe':
+        return tab_sexe.get_content()
+    elif tab == 'Sibling':
+        return tab_sibling.get_content()
+    elif tab == 'Parch' :
+        return tab_parch.get_content()
+    elif tab == 'Fare' :
+        return tab_fare.get_content()
+    elif tab == 'Embarked' :
+        return tab_embarked.get_Content
 
 
 
