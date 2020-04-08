@@ -20,24 +20,30 @@ import random
 #######################  Création d'un dataSet unique  ##################################
 #######################     Preparation des données    ##################################
 #########################################################################################
-df_exemple = pd.read_csv('gender_submission.csv')
-df_prediction = pd.read_csv('test.csv')
+#df_exemple = pd.read_csv('gender_submission.csv')
+#df_prediction = pd.read_csv('test.csv')
 df_train = pd.read_csv('train.csv')
 
 
-# on concatene nos deux dataFrames en un seul DF unique
-complete_df = pd.concat([df_train,df_prediction], sort=False)
 
-complete_df.info()
 
-# Cabin ne contient que 295 données / 1309 -> on supprime la colonne
+df_train.info()
+
+# Cabin ne contient que 204 données / 891 (23%)-> on supprime la colonne
 df_train.drop('Cabin', axis=1, inplace=True)
-complete_df.drop('Cabin', axis=1, inplace=True)
 
 
+
+# il manque 177 age soit 19.86%
 print(df_train.Age.isna().sum()) # -> 177
+
+
+#création d'un vecteur age correspondant aux decile de notre distribution
 print(pd.qcut(df_train.Age,10).unique())
-#[(0.419, 14.0] < (14.0, 19.0] < (19.0, 22.0] < (22.0, 25.0] < (25.0, 28.0] < (28 31] (31.8, 36.0] < (36.0, 41.0] < (41.0, 50.0] < (50.0, 80.0]]
+#[(0.419, 14.0] < (14.0, 19.0] < (19.0, 22.0] < (22.0, 25.0] < (25.0, 28.0] <
+# (28 31] (31.8, 36.0] < (36.0, 41.0] < (41.0, 50.0] < (50.0, 80.0]]
+
+
 s = [random.randint(0, 15) for i in range(17)]
 s += [random.randint(15, 19) for i in range(17)]
 s += [random.randint(19, 22) for i in range(18)]
@@ -84,11 +90,16 @@ s += [random.randint(50, 80) for i in range(17)]
 #########################################################################################
 train_df = pd.read_csv('train_dataframe.csv')
 
+"""
+# A REVOIR
+
 train_df['Age'].fillna(28, inplace = True)
 train_df = df_train.dropna()
 
 complete_df['Age'].fillna(s, inplace = True)
 complete_df = complete_df.dropna()
+"""
+
 
 modeleReg=LinearRegression()
 

@@ -43,7 +43,13 @@ fig3_train = px.histogram(
                 color= train_df['Survived'],
                 title='nombre mort par rapport à la variable Fraterie / conjoint',
                 )
+train_df.SibSp.unique()
 
+fig_finale = px.bar(train_df,
+                     x=[0,1,2,3,4,5,6,7,8],
+                     y=[65,46,54,75,83,100,100,100,100])
+fig_finale.update_xaxes(title='Nombre de proche (conjoint ou fraterie)')
+fig_finale.update_yaxes(title='Mortalité en pourcentage')
 
 def get_content():
   return html.Div([
@@ -59,11 +65,7 @@ def get_content():
               
                 ], className='row'),
          dcc.Graph(figure=fig3_train),
-         html.H5('taux de décés à 0 conjoint / fraterie : 65%'),
-         html.H5('taux de décés à 1 conjoint / fraterie : 46%'),
-         html.H5('taux de décés à 2 conjoint / fraterie : 54%'),
-         html.H5('taux de décés à 3 conjoint / fraterie : 75%'),
-         html.H5('taux de décés à 4 conjoint / fraterie : 83%'),
-         html.H5('taux de décés à +4 conjoint / fraterie : 100%'),
+         dcc.Graph(figure=fig_finale),
+
           
           ])

@@ -22,12 +22,15 @@ col = list(train_df.columns)
 data = [train_df.corr('spearman')]
 
 
-image_filename = os.path.join(os.getcwd(), './corr_spearman.JPG')
-
+image_filename = os.path.join(os.getcwd(), 'corr_spearman.png')
+print(image_filename)
 
 
 def get_content():
-  return html.Div([
-         html.Img(src=image_filename)
+
+    return html.Div([
+                html.H1('Bonjour'),
+                html.Img(id='image',
+                  src='./corr_spearman.png')
 
           ])

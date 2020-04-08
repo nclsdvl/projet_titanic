@@ -14,6 +14,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 
+#################################################################
+#Preparation des données
 
 train_df = pd.read_csv('train_dataframe.csv')
 complete_df = pd.read_csv('complete_dataframe.csv')
@@ -32,6 +34,9 @@ complete_df['Age'].fillna(28, inplace = True)
 
 
 
+################################################################
+#print(pd.qcut(train_df.Age.rank(method='first'),10).unique())
+
 age_train_liste = train_df['Age']
 age_complete_liste = complete_df['Age']
 
@@ -46,6 +51,12 @@ df_adultes_vivant = df_adulte[df_adulte.Survived == 'Alive']
 
 df_vieux =  train_df[(train_df['Age']>50)]
 df_vieux_vivant = df_vieux[df_vieux.Survived == 'Alive']
+
+
+###################################################################
+
+
+
 
 fig1_train = px.histogram(
                 x= age_train_liste,

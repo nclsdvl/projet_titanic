@@ -39,10 +39,13 @@ fig1_train = px.histogram(
                 x= class_train_list,
                 title='train set Embarked'
                 )
+fig1_train.update_layout(xaxis_type='category')
+
 fig2_complete = px.histogram(
                 x= class_complete_list,
                 title='complete set Embarked'
                 )
+fig2_complete.update_layout(xaxis_type='category')
 
 fig3 = px.histogram(
                 x=  class_train_list,
@@ -50,6 +53,15 @@ fig3 = px.histogram(
                 color= train_df['Survived'],
                 title="nombre mort par rapport au port d'embarquement",
                 )
+fig3.update_layout(xaxis_type='category')
+
+
+fig_finale = px.bar(
+                     x=['premiere classe','deuxieme classe','troisieme classe'],
+                     y=[37,53,75],
+                     )
+fig_finale.update_xaxes(title='premiere, deuxieme ou troisieme classe')
+fig_finale.update_yaxes(title='Mortalité en pourcentage')
 
 
 def get_content():
@@ -65,7 +77,12 @@ def get_content():
               
                 ], className='row'),      
           dcc.Graph(figure=fig3),
+          dcc.Graph(figure=fig_finale),
+          ])
+    
+    
+"""
          html.H5('taux de mortalité pour une premiere classe : 37.04%'),
          html.H5('taux de mortalité pour une seconde classe  : 52.72%'),
          html.H5('taux de mortalité pour une troisieme classe : 75.76%'),
-          ])
+"""

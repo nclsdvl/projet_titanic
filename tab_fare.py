@@ -22,19 +22,32 @@ train_df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
 fare_train_liste = train_df['Fare']
 fare_complete_liste = complete_df['Fare']
 
-quartile1 = train_df[train_df.Fare <= 7.91]
-quartile2 = train_df[(train_df.Fare > 7.91) & (train_df.Fare <= 14.45)]
-quartile3 = train_df[(train_df.Fare > 14.45) & (train_df.Fare <= 31)]
-quartile4 = train_df[train_df.Fare > 31]
+t=pd.qcut(train_df.Fare,10)
 
-dead_quart1 = len(quartile1[quartile1.Survived == 'Dead'])
-dead_quart2 = len(quartile2[quartile2.Survived == 'Dead'])
-dead_quart3 = len(quartile3[quartile3.Survived == 'Dead'])
-dead_quart4 = len(quartile4[quartile4.Survived == 'Dead'])
+decile1 = train_df[train_df.Fare <= 7.55]
+decile2 = train_df[(train_df.Fare > 7.55) & (train_df.Fare <= 7.854)]
+decile3 = train_df[(train_df.Fare > 7.854) & (train_df.Fare <= 8.05)]
+decile4 = train_df[(train_df.Fare > 8.05) & (train_df.Fare <= 10.05)]
+decile5 = train_df[(train_df.Fare > 10.05) & (train_df.Fare <= 14.454)]
+decile6 = train_df[(train_df.Fare > 14.454) & (train_df.Fare <= 21.679)]
+decile7 = train_df[(train_df.Fare > 21.679) & (train_df.Fare <= 27)]
+decile8 = train_df[(train_df.Fare > 27) & (train_df.Fare <= 39.688)]
+decile9 = train_df[(train_df.Fare > 39.688) & (train_df.Fare <= 77.958)]
+decile10 = train_df[(train_df.Fare > 77.958)]
 
+decile1_dead = len(decile1[decile1.Survived=='Dead']) # 85.87
+decile2_dead = len(decile2[decile2.Survived=='Dead']) # 68.92
+decile3_dead = len(decile3[decile3.Survived=='Dead']) # 81.51
+decile4_dead = len(decile4[decile4.Survived=='Dead']) # 82.35
+decile5_dead = len(decile5[decile5.Survived=='Dead']) # 57.69
+decile6_dead = len(decile6[decile6.Survived=='Dead']) # 59.57
+decile7_dead = len(decile7[decile7.Survived=='Dead']) # 48.89
+decile8_dead = len(decile8[decile8.Survived=='Dead']) # 62.64
+decile9_dead = len(decile9[decile9.Survived=='Dead']) # 48.84
+decile10_dead = len(decile10[decile10.Survived=='Dead']) # 23.33
 
-
-quart = pd.qcut(train_df.Fare,4)
+mortalite_y = [85.87,68.92,81.51,82.35,57.69,59.57,48.89,62.64,48.84,23.33]
+interv_x = ['0 - 7.55','7.56 - 7.85','7.85 - 8.05','8.06 - 10.05','10.06 - 14.45','14.45 - 21.67','21.68 - 27','27 - 39.68','39.68 - 77.95','77.65 - 512']
 
 fig1_train = px.histogram(
                 x= fare_train_liste,
@@ -51,9 +64,17 @@ fig3_train = px.histogram(
                 color= train_df['Survived'],
                 title='nombre mort par rapport au prix du billet',
                 )
-
-
-
+fig_finale = px.line(train_df,
+                     x=interv_x,
+                     y=mortalite_y)
+fig_finale.update_xaxes(title='Interval de prix de billet (en decile)')
+fig_finale.update_yaxes(title='Mortalité en pourcentage')
+"""
+         html.H5('taux de mortalité du 1° quartile (0 - 7.91) : 80.26%'),
+         html.H5('taux de mortalité du 2° quartile (7.91 - 14.45) : 69.12%'),
+         html.H5('taux de mortalité du 3° quartile (14.45 - 31) : 55.46%'),
+         html.H5('taux de mortalité du 4° quartile (31 - 512.33) : 41.9%'),
+"""
 def get_content():
   return html.Div([
           
@@ -68,8 +89,5 @@ def get_content():
               
                 ], className='row'),
          dcc.Graph(figure=fig3_train),
-         html.H5('taux de mortalité du 1° quartile (0 - 7.91) : 80.26%'),
-         html.H5('taux de mortalité du 2° quartile (7.91 - 14.45) : 69.12%'),
-         html.H5('taux de mortalité du 3° quartile (14.45 - 31) : 55.46%'),
-         html.H5('taux de mortalité du 4° quartile (31 - 512.33) : 41.9%'),
+         dcc.Graph(figure=fig_finale),
           ])
