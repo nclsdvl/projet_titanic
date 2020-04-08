@@ -56,7 +56,7 @@ fig3_train = px.histogram(
                 labels=['Dead','Alive'],
                 
                 color= train_df['Survived'],
-                title='nombre mort par rapport à la variable Fraterie / conjoint',
+                title='nombre mort par rapport au nombre de proche (enfant ou parent)',
                 )
 
 fig_finale = px.bar(train_df,
