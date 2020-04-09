@@ -69,7 +69,7 @@ print(res/1000) #lblinear .792 | newton-cg .795 |
 cm = confusion_matrix(y_test, y_pred)
 cm = pd.DataFrame(cm, columns=['prédit ' + str(_) for _ in reg_log.classes_])
 cm.index = ['vrai ' + str(_) for _ in reg_log.classes_]
-cm
+print(cm)
 
 
 proba = reg_log.predict_proba(X)

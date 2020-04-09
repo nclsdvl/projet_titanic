@@ -58,13 +58,15 @@ fig3_train = px.histogram(
                 color= train_df['Survived'],
                 title='nombre mort par rapport au nombre de proche (enfant ou parent)',
                 )
-
+y=[66,45,50,40,100,80,100]
 fig_finale = px.bar(train_df,
                      x=[0,1,2,3,4,5,6],
-                     y=[66,45,50,40,100,80,100])
+                     y=y,
+                     text=y,
+                     title="mortalité par nombre d'ascendant ou descendant")
 fig_finale.update_xaxes(title='Nombre de proche (enfant ou parent)')
 fig_finale.update_yaxes(title='Mortalité en pourcentage')
-
+fig_finale.update_traces(textposition='inside')
 
 def get_content():
   return html.Div([

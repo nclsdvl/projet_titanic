@@ -18,6 +18,8 @@ from sklearn.metrics import *
 import sklearn.metrics as metrics
 
 
+
+
 df_train = pd.read_csv('train.csv')
 df_train.info()
 
@@ -32,6 +34,11 @@ df_train['Age'].fillna(med_age, inplace = True)
 # on supprime les lignes contenant des na
 df_train.dropna(axis=0, how='any', inplace = True)
 df_train.info()
+
+vivant = len(df_train[df_train['Survived'] == 1])
+mort = len(df_train[df_train['Survived'] == 0])
+
+ration_mort_vivant = 0
 
 # on supprime les colonnes sans grands interets
 del df_train['PassengerId']
@@ -62,17 +69,17 @@ y_pred = 0
 for i in range (1,1000) :
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=None)
     reg_log.fit(X_train, y_train)
-    y_pred += reg_log.predict(X_test)
+    y_pred = reg_log.predict(X_test)
     reg_log.score(X_test, y_test)
     res += reg_log.score(X_test, y_test)
 
 print(res/1000) #lblinear .792 | newton-cg .795 |
-y_pred = y_pred/1000
+
 
 cm = confusion_matrix(y_test, y_pred)
 cm = pd.DataFrame(cm, columns=['prédit ' + str(_) for _ in reg_log.classes_])
 cm.index = ['vrai ' + str(_) for _ in reg_log.classes_]
-cm
+print(cm)
 
 
 proba = reg_log.predict_proba(X)

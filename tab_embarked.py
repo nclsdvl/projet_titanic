@@ -47,11 +47,16 @@ fig3 = px.histogram(
                 color= train_df['Survived'],
                 title="nombre mort par rapport au port d'embarquement",
                 )
+
+y = [66.01, 61.04, 44.64]
 fig_finale = px.bar(
                      x= ['Southampton', 'Queenstown', 'Cherbourg'],
-                     y=[66.01, 61.04, 44.64])
+                     y=y,
+                     text=y,
+                     title="mortalité par port d'embarquement")
 fig_finale.update_xaxes(title="Port d'embarquement")
 fig_finale.update_yaxes(title='Mortalité en pourcentage')
+fig_finale.update_traces(textposition='inside')
 
 def get_content():
   return html.Div([

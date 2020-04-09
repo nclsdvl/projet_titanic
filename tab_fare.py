@@ -69,12 +69,7 @@ fig_finale = px.line(train_df,
                      y=mortalite_y)
 fig_finale.update_xaxes(title='Interval de prix de billet (en decile)')
 fig_finale.update_yaxes(title='Mortalité en pourcentage')
-"""
-         html.H5('taux de mortalité du 1° quartile (0 - 7.91) : 80.26%'),
-         html.H5('taux de mortalité du 2° quartile (7.91 - 14.45) : 69.12%'),
-         html.H5('taux de mortalité du 3° quartile (14.45 - 31) : 55.46%'),
-         html.H5('taux de mortalité du 4° quartile (31 - 512.33) : 41.9%'),
-"""
+
 def get_content():
   return html.Div([
           

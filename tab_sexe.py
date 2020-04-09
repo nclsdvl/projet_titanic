@@ -21,6 +21,7 @@ complete_df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
 train_df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
 
 
+
 train_homme = train_df[train_df['Sex']=='male']
 train_femme = train_df[train_df['Sex']=='female']
 
@@ -78,7 +79,6 @@ fig4 = px.pie(values=[nb_f_mort, nb_f_vivant],
 
 def get_content():
   return html.Div([
-          
              html.Div([
               html.Div([
                       dcc.Graph(figure=fig1_train)

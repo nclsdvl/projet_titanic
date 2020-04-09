@@ -5,8 +5,8 @@ Created on Mon Apr  6 09:53:08 2020
 @author: utilisateur
 """
 import pandas as pd
-import pandas_profiling
-from pandas_profiling import ProfileReport
+#import pandas_profiling
+#from pandas_profiling import ProfileReport
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import numpy as np
@@ -20,11 +20,11 @@ import random
 #######################  Création d'un dataSet unique  ##################################
 #######################     Preparation des données    ##################################
 #########################################################################################
-#df_exemple = pd.read_csv('gender_submission.csv')
-#df_prediction = pd.read_csv('test.csv')
+df_exemple = pd.read_csv('gender_submission.csv')
+df_prediction = pd.read_csv('test.csv')
 df_train = pd.read_csv('train.csv')
 
-
+df_train[df_train['Age']<=18]
 
 
 df_train.info()
@@ -33,6 +33,8 @@ df_train.info()
 df_train.drop('Cabin', axis=1, inplace=True)
 
 
+nb_prms_pred = df_prediction[df_prediction.Pclass==1]
+nb_prems_train = df_train[df_train.Pclass == 1]
 
 # il manque 177 age soit 19.86%
 print(df_train.Age.isna().sum()) # -> 177

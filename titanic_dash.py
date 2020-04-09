@@ -25,6 +25,20 @@ import tab_correlation as tab_correlation
 
 complete_df = pd.read_csv('complete_dataframe.csv')
 train_df = pd.read_csv('train_dataframe.csv')
+ train_df.info()
+complete_df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
+train_df['Survived'].replace({0:'Dead', 1:'Alive'}, inplace = True)
+survivor = len(train_df[train_df.Survived == 'Alive'])
+dead = len(train_df[train_df.Survived == 'Dead'])
+
+
+
+fig = px.pie(values=[survivor, dead], 
+                    labels=['survivant','mort'],
+                    names = ['survivant','mort'],
+                    color_discrete_sequence=['#4169E1', '#DB7093'],
+                    title='Proportion Mort / Survivant Training Set',
+                    )
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -49,7 +63,8 @@ app.layout = html.Div([
                 dcc.Tab(label='Pclass', value='Pclass'),
                 dcc.Tab(label='Correlation', value='Correlation')
             ]),
-            html.Div(id='tabs-content')
+            html.Div(id='tabs-content'),
+            dcc.Graph(figure=fig)
             ])
         
 
